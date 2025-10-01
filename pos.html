@@ -1,0 +1,61 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>My POS Register</title>
+<style>
+  body { font-family: sans-serif; background:#111; color:#eee; margin:0; padding:20px; }
+  h1 { text-align:center; }
+  .products, .cart { margin:20px 0; }
+  .product { background:#222; padding:10px; margin:5px; border-radius:6px; cursor:pointer; }
+  .cart-item { display:flex; justify-content:space-between; padding:6px; border-bottom:1px solid #333; }
+  button { padding:10px 15px; margin:5px; border:none; border-radius:6px; cursor:pointer; }
+  .checkout { background:#28a745; color:white; }
+  .clear { background:#c82333; color:white; }
+</style>
+</head>
+<body>
+  <h1>POS Register</h1>
+  <div class="products">
+    <div class="product" onclick="addToCart('Apple', 1.50)">🍎 Apple - $1.50</div>
+    <div class="product" onclick="addToCart('Bread', 2.00)">🍞 Bread - $2.00</div>
+    <div class="product" onclick="addToCart('Milk', 3.00)">🥛 Milk - $3.00</div>
+  </div>
+  
+  <h2>Cart</h2>
+  <div id="cart"></div>
+  <h3>Total: $<span id="total">0.00</span></h3>
+  
+  <button class="checkout" onclick="checkout()">Checkout</button>
+  <button class="clear" onclick="clearCart()">Clear</button>
+  
+  <script>
+    let cart = [];
+    function addToCart(name, price) {
+      cart.push({name, price});
+      renderCart();
+    }
+    function renderCart() {
+      let cartDiv = document.getElementById("cart");
+      cartDiv.innerHTML = "";
+      let total = 0;
+      cart.forEach(item => {
+        total += item.price;
+        let div = document.createElement("div");
+        div.className = "cart-item";
+        div.innerText = item.name + " - $" + item.price.toFixed(2);
+        cartDiv.appendChild(div);
+      });
+      document.getElementById("total").innerText = total.toFixed(2);
+    }
+    function checkout() {
+      alert("Payment complete! Total was $" + document.getElementById("total").innerText);
+      clearCart();
+    }
+    function clearCart() {
+      cart = [];
+      renderCart();
+    }
+  </script>
+</body>
+</html>
